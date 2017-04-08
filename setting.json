@@ -1,0 +1,12 @@
+{
+  "UserName": "",
+  "password": "",
+  "setting": {
+    "maxCountAddUsers": 3,
+    "AddUsersWithMinCountFollowers": 1,
+    "AddUsersWithMaxCountFollowers": 10000,
+    "AddUsersWithMinCountFollowing": 2,
+    "AddUsersWithMaxCountFollowing": 20000,
+    "delete": ""
+  }
+}

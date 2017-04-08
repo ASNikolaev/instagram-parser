@@ -1,0 +1,31 @@
+{
+  "name": "InstagramParser",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/parser.js",
+  "scripts": {
+    "start": "node dist/parser.js",
+    "build": "babel src -d dist --presets es2015",
+    "watch": "babel src -d dist --presets es2015 -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cron-job-manager": "^1.0.7",
+    "gulp-es6-module-bundler": "^0.1.0",
+    "selenium-chromedriver": "0.0.2",
+    "selenium-webdriver": "^3.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-watch": "^4.3.11"
+  }
+}
