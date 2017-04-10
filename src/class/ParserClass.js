@@ -43,29 +43,27 @@ class ParserClass {
     }
 
     logInAccount() {
-        let self = this;
         this.driver.get('https://www.instagram.com/accounts/login/');
-        this.driver.wait(self.until.titleIs('Вход • Instagram'), 1000);
-        this.driver.findElement(self.By.name('username')).sendKeys(self.UserName);
-        this.driver.findElement(self.By.name('password')).sendKeys(self.password);
-        this.driver.findElement(self.By.xpath('//button')).click();
+        this.driver.wait(this.until.titleIs('Вход • Instagram'), 1000);
+        this.driver.findElement(this.By.name('username')).sendKeys(this.UserName);
+        this.driver.findElement(this.By.name('password')).sendKeys(this.password);
+        this.driver.findElement(this.By.xpath('//button')).click();
         this.driver.sleep(5000);
-        this.driver.findElement(self.By.className("_q90d5"))
+        this.driver.findElement(this.By.className("_q90d5"))
             .then(res => {
                 console.log('password incorrect');
-                self.driver.quit()
+                this.driver.quit()
             })
             .catch(err => {
-                this.driver.findElement(self.By.xpath("//div[@class='_pq5am']/div[3]/a")).click();
+                this.driver.findElement(this.By.xpath("//div[@class='_pq5am']/div[3]/a")).click();
             });
     }
 
     searchFollowersViaMyFollowers () {
-        let self = this;
         if (this.countADD >= this.setting.maxCountAddUsers) {
             this.driver.quit();
         }
-        let prom = this.driver.findElement(self.By.className("_glq0k"))
+        let prom = this.driver.findElement(this.By.className("_glq0k"))
             .then((res) => {
                 let users = (this.steps.length === 0) ?
                     `https://www.instagram.com/${this.UserName}/` : this.steps[randomInteger(0, this.steps.length-1)];
@@ -74,54 +72,52 @@ class ParserClass {
             })
             .catch((err) => {
                 let followPath = "//div[@class='_de9bg']/ul/li[3]/a";
-                this.driver.wait(self.until.elementLocated(self.By.xpath("//div[@class='_de9bg']")));
-                this.driver.findElement(self.By.xpath(followPath)).click();
-                this.driver.wait(self.until.elementLocated(self.By.xpath("//li[@class='_cx1ua']")));
+                this.driver.wait(this.until.elementLocated(this.By.xpath("//div[@class='_de9bg']")));
+                this.driver.findElement(this.By.xpath(followPath)).click();
+                this.driver.wait(this.until.elementLocated(this.By.xpath("//li[@class='_cx1ua']")));
 
 
-                this.driver.findElements(self.By.className("_cx1ua")).then((elements) => {
+                this.driver.findElements(this.By.className("_cx1ua")).then((elements) => {
                     let RandomUsers = randomInteger(1, elements.length);
                     this.goOnPageUsers(RandomUsers)
 
                 });
 
 
-                this.driver.findElement(self.By.className('_84y62'))
+                this.driver.findElement(this.By.className('_84y62'))
                     .then((res) => {
-                        self.checkPage();
+                        this.checkPage();
                     })
                     .catch((err) => {});
 
-                this.driver.findElement(self.By.xpath("//div[@class='_8mm5v']/h1")).getText().then((name) => {
-                    self.steps.push(`https://www.instagram.com/${name}/`)
+                this.driver.findElement(this.By.xpath("//div[@class='_8mm5v']/h1")).getText().then((name) => {
+                    this.steps.push(`https://www.instagram.com/${name}/`)
                 });
             });
 
 
 
         Promise.all([prom]).then((res) => {
-            self.driver.sleep(2000);
-            self.callFunction();
+            this.driver.sleep(2000);
+            this.callFunction();
         })
     }
 
     goOnPageUsers(users) {
-        let self = this;
         let user = `//div[@class='_4gt3b']/ul/li[${users}]/div/div[1]/div/div/a`;
-        this.driver.findElement(self.By.xpath(user)).click();
-        this.driver.wait(self.until.elementLocated(self.By.xpath("//div[@class='_de9bg']")));
+        this.driver.findElement(this.By.xpath(user)).click();
+        this.driver.wait(this.until.elementLocated(this.By.xpath("//div[@class='_de9bg']")));
     }
 
     checkPage () {
-        let self = this;
         let listDataUsers = "//div[@class='_de9bg']/ul";
 
-        this.driver.findElement(self.By.xpath(`${listDataUsers}/li[2]/a/span`))
+        this.driver.findElement(this.By.xpath(`${listDataUsers}/li[2]/a/span`))
             .getText()
             .then((followers) => {
 
-                let minCFollowers = Number(self.setting.AddUsersWithMinCountFollowers) || true,
-                    maxCFollowers = Number(self.setting.AddUsersWithMaxCountFollowers) || true,
+                let minCFollowers = Number(this.setting.AddUsersWithMinCountFollowers) || true,
+                    maxCFollowers = Number(this.setting.AddUsersWithMaxCountFollowers) || true,
                     fllwers = Number(followers);
 
                 if (minCFollowers &&
@@ -129,32 +125,32 @@ class ParserClass {
                     maxCFollowers >= fllwers &&
                     minCFollowers <= fllwers) {
 
-                    self.driver.findElement(self.By.xpath(`${listDataUsers}/li[3]/a/span`))
+                    this.driver.findElement(this.By.xpath(`${listDataUsers}/li[3]/a/span`))
                         .getText()
                         .then((followings) => {
 
-                            let minCFollowings = Number(self.setting.AddUsersWithMinCountFollowing) || true,
-                                maxCFollowings = Number(self.setting.AddUsersWithMaxCountFollowing) || true,
+                            let minCFollowings = Number(this.setting.AddUsersWithMinCountFollowing) || true,
+                                maxCFollowings = Number(this.setting.AddUsersWithMaxCountFollowing) || true,
                                 fllwings = Number(followings);
 
                             if (maxCFollowings &&
                                 minCFollowings &&
                                 maxCFollowings >= fllwings &&
                                 minCFollowings <= fllwings) {
-                                self.driver.findElement(self.By.xpath("//div[@class='_8mm5v']/span/span[1]/button")).click();
-                                console.log('click')
-                                self.pageSt = true;
+                                this.driver.findElement(this.By.xpath("//div[@class='_8mm5v']/span/span[1]/button")).click();
+                                console.log('click');
+                                this.pageSt = true;
                             } else {
-                                self.pageSt = false
+                                this.pageSt = false
                             }
                         })
                 } else {
-                    self.pageSt = false
+                    this.pageSt = false
                 }
             });
 
-        if (self.pageSt) {
-            self.countADD += 1;
+        if (this.pageSt) {
+            this.countADD += 1;
         }
     }
 
