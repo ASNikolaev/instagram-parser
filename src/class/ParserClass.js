@@ -4,7 +4,7 @@ function nospace(str) {
     return VResult
 }
 
-function randomInteger(min=1, max) {
+function randomInteger(min=1, max=3) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
     rand = Math.round(rand);
     return rand;
@@ -44,7 +44,7 @@ class ParserClass {
 
     logInAccount() {
         this.driver.get('https://www.instagram.com/accounts/login/');
-        this.driver.wait(this.until.titleIs('Вход • Instagram'), 1000);
+        this.driver.wait(this.until.titleIs('Login • Instagram'), 1000);
         this.driver.findElement(this.By.name('username')).sendKeys(this.UserName);
         this.driver.findElement(this.By.name('password')).sendKeys(this.password);
         this.driver.findElement(this.By.xpath('//button')).click();
@@ -71,7 +71,9 @@ class ParserClass {
 
             })
             .catch((err) => {
+
                 let followPath = "//div[@class='_de9bg']/ul/li[3]/a";
+
                 this.driver.wait(this.until.elementLocated(this.By.xpath("//div[@class='_de9bg']")));
                 this.driver.findElement(this.By.xpath(followPath)).click();
                 this.driver.wait(this.until.elementLocated(this.By.xpath("//li[@class='_cx1ua']")));
@@ -132,13 +134,20 @@ class ParserClass {
                             let minCFollowings = Number(this.setting.AddUsersWithMinCountFollowing) || true,
                                 maxCFollowings = Number(this.setting.AddUsersWithMaxCountFollowing) || true,
                                 fllwings = Number(followings);
-
+                            console.log(`maxCFollowers >= fllwers: ${maxCFollowers >= fllwers}\n
+                            maxCFollowers >= fllwers: ${maxCFollowers >= fllwers}\n
+                            minCFollowers <= fllwers: ${minCFollowers <= fllwers}\n
+                            maxCFollowings >= fllwings : ${maxCFollowings >= fllwings }\n
+                            minCFollowings <= fllwings: ${minCFollowings <= fllwings}\n`)
                             if (maxCFollowings &&
                                 minCFollowings &&
                                 maxCFollowings >= fllwings &&
                                 minCFollowings <= fllwings) {
-                                this.driver.findElement(this.By.xpath("//div[@class='_8mm5v']/span/span[1]/button")).click();
-                                console.log('click');
+
+                                this.driver.findElement(this.By.className("_frcv2")).click().then(res => console.log(res)).catch(console.error);
+
+                                this.driver.sleep(3000);
+
                                 this.pageSt = true;
                             } else {
                                 this.pageSt = false
